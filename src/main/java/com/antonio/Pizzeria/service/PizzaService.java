@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,9 @@ public class PizzaService {
 
     public PizzaEntity get(int idPizza) {
         return pizzaRepository.findById(idPizza).orElse(null);
+    }
+
+    public Optional<PizzaEntity> save(PizzaEntity pizza) {
+        return Optional.of(pizzaRepository.save(pizza));
     }
 }
