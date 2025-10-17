@@ -27,4 +27,9 @@ public class PizzaService {
     public Optional<PizzaEntity> save(PizzaEntity pizza) {
         return Optional.of(pizzaRepository.save(pizza));
     }
+
+    public boolean delete(int idPizza) {
+        pizzaRepository.deleteById(idPizza);
+        return get(idPizza) == null;
+    }
 }
