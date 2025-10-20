@@ -32,4 +32,12 @@ public class PizzaService {
         pizzaRepository.deleteById(idPizza);
         return get(idPizza) == null;
     }
+
+    public List<PizzaEntity> getAvailable() {
+        return this.pizzaRepository.findAllByAvailableTrueOrderByPrice();
+    }
+
+    public List<PizzaEntity> getByName(String name) {
+        return this.pizzaRepository.findAllByAvailableTrueAndNameIgnoreCase(name);
+    }
 }
