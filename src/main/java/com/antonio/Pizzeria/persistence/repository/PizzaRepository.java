@@ -12,7 +12,7 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
     Optional<PizzaEntity> findFirstByAvailableTrueAndNameIgnoreCase(String name);
     List<PizzaEntity> findAllByAvailableTrueAndDescriptionContainsIgnoreCase(String ingredient);
     List<PizzaEntity> findAllByAvailableTrueAndDescriptionNotContainsIgnoreCase(String ingredient);
-    List<PizzaEntity> findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPricesAsc(double price);
+    List<PizzaEntity> findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(double price);
     int countByVeganTrue();
 }
 

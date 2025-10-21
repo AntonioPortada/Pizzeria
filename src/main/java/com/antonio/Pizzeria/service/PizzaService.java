@@ -1,10 +1,12 @@
 package com.antonio.Pizzeria.service;
 
 import com.antonio.Pizzeria.persistence.entity.PizzaEntity;
+import com.antonio.Pizzeria.persistence.repository.PizzaPageSortRepository;
 import com.antonio.Pizzeria.persistence.repository.PizzaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class PizzaService {
 
     private final PizzaRepository pizzaRepository;
+    private final PizzaPageSortRepository pizzaPageSortRepository;
 
-    public List<PizzaEntity> getAll() {
-        return pizzaRepository.findAll();
+    public Page<PizzaEntity> getAll(int page, int elements) {
+        Pageable pageable = PageRequest.of(page, elements);
+        return pizzaPageSortRepository.findAll(pageable);
     }
 
     public PizzaEntity get(int idPizza) {
@@ -53,6 +57,6 @@ public class PizzaService {
     }
 
     public List<PizzaEntity> getCheapest(double price) {
-        return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPricesAsc(price);
+        return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(price);
     }
 }

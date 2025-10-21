@@ -3,6 +3,7 @@ package com.antonio.Pizzeria.web.controller;
 import com.antonio.Pizzeria.persistence.entity.PizzaEntity;
 import com.antonio.Pizzeria.service.PizzaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,8 +25,9 @@ public class PizzaController {
     private final PizzaService pizzaService;
 
     @GetMapping
-    public ResponseEntity<List<PizzaEntity>> getAll() {
-        return ResponseEntity.ok(pizzaService.getAll());
+    public ResponseEntity<Page<PizzaEntity>> getAll(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                    @RequestParam(name = "elements", defaultValue = "5") int elements) {
+        return ResponseEntity.ok(pizzaService.getAll(page, elements));
     }
 
     @GetMapping("/{idPizza}")
