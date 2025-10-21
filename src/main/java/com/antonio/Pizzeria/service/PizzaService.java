@@ -38,8 +38,10 @@ public class PizzaService {
         return this.pizzaRepository.findAllByAvailableTrueOrderByPrice();
     }
 
-    public List<PizzaEntity> getByName(String name) {
-        return this.pizzaRepository.findAllByAvailableTrueAndNameIgnoreCase(name);
+    public PizzaEntity getByName(String name) {
+        return this.pizzaRepository.findFirstByAvailableTrueAndNameIgnoreCase(name).orElseThrow(
+                () -> new RuntimeException("La pizza no existe")
+        );
     }
 
     public List<PizzaEntity> getWith(String ingredient) {
@@ -48,5 +50,9 @@ public class PizzaService {
 
     public List<PizzaEntity> getWithout(String ingredient) {
         return this.pizzaRepository.findAllByAvailableTrueAndDescriptionNotContainsIgnoreCase(ingredient);
+    }
+
+    public List<PizzaEntity> getCheapest(double price) {
+        return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPricesAsc(price);
     }
 }
