@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,9 +38,13 @@ public class PizzaService {
         return get(idPizza) == null;
     }
 
-    public List<PizzaEntity> getAvailable() {
+    public Page<PizzaEntity> getAvailable(int page, int elements, String sortBy, String sortDirection) {
         System.out.println(this.pizzaRepository.countByVeganTrue());
-        return this.pizzaRepository.findAllByAvailableTrueOrderByPrice();
+
+        //Pageable pageRequest = PageRequest.of(page, elements, Sort.by(sortBy)); //primera opción solo ordena por campo
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
+        Pageable pageRequest = PageRequest.of(page, elements, sort); //segunda opción, ordena y de forma desc o asc
+        return this.pizzaPageSortRepository.findByAvailableTrue(pageRequest);
     }
 
     public PizzaEntity getByName(String name) {
