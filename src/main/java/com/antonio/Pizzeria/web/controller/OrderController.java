@@ -1,6 +1,7 @@
 package com.antonio.Pizzeria.web.controller;
 
 import com.antonio.Pizzeria.persistence.entity.OrderEntity;
+import com.antonio.Pizzeria.persistence.projection.OrderSummary;
 import com.antonio.Pizzeria.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,10 @@ public class OrderController {
     @GetMapping("/customer/{id}")
     public ResponseEntity<List<OrderEntity>> getCustomerOrders(@PathVariable("id") String id) {
         return ResponseEntity.ok(this.service.getCustomerOrders(id));
+    }
+
+    @GetMapping("/summary/{id}")
+    public ResponseEntity<OrderSummary> getSummary(@PathVariable("id") int id) {
+        return ResponseEntity.ok(this.service.getSummary(id));
     }
 }

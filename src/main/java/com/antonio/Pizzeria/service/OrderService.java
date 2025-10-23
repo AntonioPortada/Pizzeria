@@ -1,6 +1,7 @@
 package com.antonio.Pizzeria.service;
 
 import com.antonio.Pizzeria.persistence.entity.OrderEntity;
+import com.antonio.Pizzeria.persistence.projection.OrderSummary;
 import com.antonio.Pizzeria.persistence.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,9 @@ public class OrderService {
 
     public List<OrderEntity> getCustomerOrders(String idCustomer) {
         return this.repository.findCustomerOrders(idCustomer);
+    }
+
+    public OrderSummary getSummary(int idOrder) {
+        return this.repository.findSummary(idOrder);
     }
 }
