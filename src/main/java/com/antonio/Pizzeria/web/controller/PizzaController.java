@@ -2,11 +2,13 @@ package com.antonio.Pizzeria.web.controller;
 
 import com.antonio.Pizzeria.persistence.entity.PizzaEntity;
 import com.antonio.Pizzeria.service.PizzaService;
+import com.antonio.Pizzeria.service.dto.UpdatePizzaDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -79,5 +81,11 @@ public class PizzaController {
     @GetMapping("/cheapest/{price}")
     public ResponseEntity<List<PizzaEntity>> getCheapestPizzas(@PathVariable("price") double price) {
         return ResponseEntity.ok(this.pizzaService.getCheapest(price));
+    }
+
+    @PatchMapping("/price")
+    public ResponseEntity<Void> updatePrice(@RequestBody UpdatePizzaDTO dto) {
+        this.pizzaService.updatePrice(dto);
+        return ResponseEntity.ok().build();
     }
 }
