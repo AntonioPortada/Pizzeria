@@ -4,6 +4,8 @@ import com.antonio.Pizzeria.persistence.entity.PizzaEntity;
 import com.antonio.Pizzeria.persistence.repository.PizzaPageSortRepository;
 import com.antonio.Pizzeria.persistence.repository.PizzaRepository;
 import com.antonio.Pizzeria.service.dto.UpdatePizzaDTO;
+import com.antonio.Pizzeria.service.exception.EmailApiException;
+import com.antonio.Pizzeria.service.exception.NotificationException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -67,8 +69,14 @@ public class PizzaService {
         return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(price);
     }
 
-    @Transactional
+    //@Transactional //realiza rollback si algo falla
+    @Transactional(dontRollbackOn = { EmailApiException.class, NotificationException.class})
     public void updatePrice(UpdatePizzaDTO dto) {
         this.pizzaRepository.updatePrice(dto);
+        this.sendEmail();
+    }
+
+    private void sendEmail() {
+        throw new EmailApiException();
     }
 }
