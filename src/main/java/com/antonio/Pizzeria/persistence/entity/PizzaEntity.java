@@ -1,5 +1,7 @@
 package com.antonio.Pizzeria.persistence.entity;
 
+import com.antonio.Pizzeria.persistence.audit.AuditPizzaListener;
+import com.antonio.Pizzeria.persistence.audit.AuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -10,19 +12,19 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "pizza")
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, AuditPizzaListener.class})
 @Getter
 @Setter
 @NoArgsConstructor
-public class PizzaEntity extends AuditableEntity {
+@ToString
+public class PizzaEntity extends AuditableEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
