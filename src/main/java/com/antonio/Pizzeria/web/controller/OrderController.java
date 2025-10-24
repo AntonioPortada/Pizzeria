@@ -3,11 +3,14 @@ package com.antonio.Pizzeria.web.controller;
 import com.antonio.Pizzeria.persistence.entity.OrderEntity;
 import com.antonio.Pizzeria.persistence.projection.OrderSummary;
 import com.antonio.Pizzeria.service.OrderService;
+import com.antonio.Pizzeria.service.dto.RandomOrderDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -42,5 +45,10 @@ public class OrderController {
     @GetMapping("/summary/{id}")
     public ResponseEntity<OrderSummary> getSummary(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.service.getSummary(id));
+    }
+
+    @PostMapping("/random")
+    public ResponseEntity<Boolean> randomOrder(@RequestBody RandomOrderDTO dto) {
+        return ResponseEntity.ok(this.service.saveRandomOrder(dto));
     }
 }
