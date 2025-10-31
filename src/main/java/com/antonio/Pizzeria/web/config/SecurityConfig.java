@@ -32,6 +32,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
                         .requestMatchers( "/api/user/**").hasRole("ADMIN")
                         .requestMatchers("/api/orders/**").hasRole("ADMIN")
+                        .requestMatchers("/api/rol/**").hasRole("ROLES")
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->
