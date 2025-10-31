@@ -1,6 +1,7 @@
 package com.antonio.Pizzeria.service;
 
 import com.antonio.Pizzeria.persistence.entity.UserEntity;
+import com.antonio.Pizzeria.persistence.entity.UserRolEntity;
 import com.antonio.Pizzeria.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -19,10 +20,11 @@ public class UserSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = this.repository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User"+ username +"not found"));
+        String[] roles = userEntity.getRoles().stream().map(UserRolEntity::getRole).toArray(String[]::new);
         return User.builder()
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
-                .roles("ADMIN")
+                .roles(roles)
                 .accountLocked(userEntity.getLocked())
                 .disabled(userEntity.getDisabled())
                 .build();
