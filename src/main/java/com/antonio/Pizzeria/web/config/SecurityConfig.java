@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
+    /*@Bean //se creó el service para proveer los usuarios de db
     public UserDetailsService memoryUser() {
         UserDetails admin = User.builder()
                 .username("admin")
@@ -54,5 +54,5 @@ public class SecurityConfig {
                 .build();
 
         return new InMemoryUserDetailsManager(admin, customer);
-    }
+    }*/
 }
