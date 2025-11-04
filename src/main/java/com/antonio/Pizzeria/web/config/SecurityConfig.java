@@ -31,6 +31,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/pizzas/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
                         .requestMatchers( "/api/user/**").hasRole("ADMIN")
+                        .requestMatchers("/api/orders/random").hasAuthority("random_order") //check the order to prevent not allowed
                         .requestMatchers("/api/orders/**").hasRole("ADMIN")
                         .requestMatchers("/api/rol/**").hasRole("ROLES")
                         .anyRequest().permitAll()
