@@ -5,6 +5,7 @@ import com.antonio.Pizzeria.persistence.projection.OrderSummary;
 import com.antonio.Pizzeria.persistence.repository.OrderRepository;
 import com.antonio.Pizzeria.service.dto.RandomOrderDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ public class OrderService {
         return this.repository.findAllByMethodIn(methods);
     }
 
+    @Secured("ROLE_ADMIN")
     public List<OrderEntity> getCustomerOrders(String idCustomer) {
         return this.repository.findCustomerOrders(idCustomer);
     }
